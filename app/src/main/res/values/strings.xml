@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Tasks</string>
+    <string name="app_desc">Tasks make you life organized</string>
+    <string name="login_username_hint">Please input your username.</string>
+    <string name="login_password_hint">Please input your password.</string>
 </resources>
