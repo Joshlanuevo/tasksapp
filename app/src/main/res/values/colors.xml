@@ -18,4 +18,6 @@
     <color name="light_sky_blue">#87CEFA</color>
     <color name="powder_blue">#B0E0E6</color>
     <color name="color_gray">#808191</color>
+    <color name="color_divider">#F8F8F8</color>
+    <color name="color_window_background">#dedede</color>
 </resources>
