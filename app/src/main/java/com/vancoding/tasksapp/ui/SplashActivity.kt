@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import com.vancoding.tasksapp.MainActivity
 import com.vancoding.tasksapp.mvvm.BaseActivity
 
 @SuppressLint("CustomSplashScreen")
@@ -23,7 +22,7 @@ class SplashActivity : BaseActivity() {
     private fun navigateToAppropriateActivity(isLoggedIn: Boolean) {
         if (isLoggedIn) {
             // User is logged in, navigate to MainActivity
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+            startActivity(Intent(this@SplashActivity, HomeActivity::class.java))
         } else {
             // User is not logged in, navigate to LoginActivity
             startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
@@ -35,7 +34,7 @@ class SplashActivity : BaseActivity() {
     private fun checkUserLoginStatus(): Boolean {
         // Implement your actual login check logic here
         // For now, return false to always show LoginActivity
-        return true;
+        return false;
     }
 
     override fun initView() {}

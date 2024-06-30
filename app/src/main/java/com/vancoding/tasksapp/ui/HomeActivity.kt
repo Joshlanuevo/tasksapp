@@ -1,13 +1,8 @@
-package com.vancoding.tasksapp
+package com.vancoding.tasksapp.ui
 
-import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.vancoding.tasksapp.mvvm.BaseActivity
 
-class MainActivity : BaseActivity() {
+class HomeActivity : BaseActivity() {
     override fun initView() {
         TODO("Not yet implemented")
     }
