@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_white"
     tools:ignore="MissingDefaultResource,MissingPrefix">
 
     <!--Control bottom spacing-->
@@ -75,7 +75,6 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/tab_mine_icon"
-                android:drawablePadding="1dp"
                 android:text="Settings"
                 app:itemBackground="@null" />
 

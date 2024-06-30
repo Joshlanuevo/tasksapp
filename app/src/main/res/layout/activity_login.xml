@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/white">
+    android:background="@color/color_white">
 
     <TextView
         android:id="@+id/tvAppName"
@@ -76,7 +76,7 @@
         android:layout_marginRight="24dp"
         android:background="@drawable/shape_gradient_login_btn"
         android:text="Login"
-        android:textColor="@color/white"
+        android:textColor="@color/color_white"
         android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
