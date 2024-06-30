@@ -34,7 +34,7 @@ class SplashActivity : BaseActivity() {
     private fun checkUserLoginStatus(): Boolean {
         // Implement your actual login check logic here
         // For now, return false to always show LoginActivity
-        return false;
+        return true;
     }
 
     override fun initView() {}

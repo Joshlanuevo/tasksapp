@@ -10,4 +10,16 @@
     <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/tasks_splash</item>
     </style>
+
+    <style name="RadioGroupButtonStyle">
+        <!--This attribute is to remove the default style of the button-->
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@drawable/color_selector</item>
+        <item name="android:colorControlHighlight">@android:color/transparent</item>
+    </style>
 </resources>
