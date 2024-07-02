@@ -50,4 +50,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation("io.coil-kt:coil:2.0.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 }

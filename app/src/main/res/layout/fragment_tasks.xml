@@ -83,5 +83,22 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listTasks"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_light"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="3"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>
