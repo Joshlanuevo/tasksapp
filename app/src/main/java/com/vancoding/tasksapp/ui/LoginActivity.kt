@@ -1,5 +1,6 @@
 package com.vancoding.tasksapp.ui
 
+import android.content.Intent
 import android.widget.Toast
 import com.vancoding.tasksapp.databinding.ActivityLoginBinding
 import com.vancoding.tasksapp.mvvm.BaseActivity
@@ -21,9 +22,8 @@ class LoginActivity : BaseActivity() {
         }
 
         binding.BtnRegister.setOnClickListener {
-            // Handle register button click
-            // Example: Navigate to RegisterActivity
-            // startActivity(Intent(this, RegisterActivity::class.java))
+            val intent =Intent(this, RegisterActivity::class.java);
+            startActivity(intent);
         }
     }
 
