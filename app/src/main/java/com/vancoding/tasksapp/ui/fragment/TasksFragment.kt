@@ -16,7 +16,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTasksBinding.inflate(inflater, container, false)
         return binding.root
     }
