@@ -1,6 +1,7 @@
 package com.vancoding.tasksapp.ui.fragment
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import coil.load
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.databinding.FragmentTasksBinding
 import com.vancoding.tasksapp.mvvm.BaseFragment
+import com.vancoding.tasksapp.popup.AddTasksPopupWindow
 
 class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     private var _binding: FragmentTasksBinding? = null
@@ -33,6 +35,11 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
 
     override fun initView() {
         binding.ivLogo.load(R.mipmap.ic_launcher)
+
+        binding.ivAdd.setOnClickListener {
+            val popupWindow = AddTasksPopupWindow(requireContext());
+            popupWindow.showPopup(binding.ivAdd, 200, 4, Gravity.BOTTOM)
+        }
     }
 
     override fun requestData() {

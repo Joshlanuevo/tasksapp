@@ -49,6 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
     implementation("io.coil-kt:coil:2.0.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.github.XuDeveloper:XPopupWindow:1.0.1")
 }
