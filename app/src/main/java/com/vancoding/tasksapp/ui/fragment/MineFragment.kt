@@ -9,6 +9,7 @@ import coil.load
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.databinding.FragmentMineBinding
 import com.vancoding.tasksapp.mvvm.BaseFragment
+import com.vancoding.tasksapp.ui.SetActivity
 
 class MineFragment: BaseFragment(R.layout.fragment_mine) {
     private  var _binding: FragmentMineBinding? = null;
@@ -35,7 +36,7 @@ class MineFragment: BaseFragment(R.layout.fragment_mine) {
 
     override fun initView() {
         binding.tvSet.setOnClickListener{
-            startActivity(Intent(SetActivity::class.java))
+            startActivity(Intent(activity, SetActivity::class.java))
         }
     }
 
