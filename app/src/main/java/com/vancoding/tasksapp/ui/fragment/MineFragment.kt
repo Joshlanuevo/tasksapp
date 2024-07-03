@@ -1,5 +1,6 @@
 package com.vancoding.tasksapp.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +33,11 @@ class MineFragment: BaseFragment(R.layout.fragment_mine) {
         _binding = null
     }
 
-    override fun initView() {}
+    override fun initView() {
+        binding.tvSet.setOnClickListener{
+            startActivity(Intent(SetActivity::class.java))
+        }
+    }
 
     override fun requestData() {
         // Fetch data...
