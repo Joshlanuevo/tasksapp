@@ -2,11 +2,20 @@ package com.vancoding.tasksapp.ui
 
 import android.content.Intent
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.vancoding.tasksapp.databinding.ActivityLoginBinding
+import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
+import com.vancoding.tasksapp.repository.UserRepository
+import com.vancoding.tasksapp.viewmodel.LoginViewModel
+import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 
 class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val mViewModel: LoginViewModel by viewModels {
+        LoginViewModelFactory(UserRepository(UserDb.getDatabase(this).userDao))
+    }
 
     override fun initView() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -18,7 +27,9 @@ class LoginActivity : BaseActivity() {
 
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show()
-            } else {}
+            } else {
+                mViewModel.getUser(username, password);
+            }
         }
 
         binding.BtnRegister.setOnClickListener {
@@ -29,5 +40,15 @@ class LoginActivity : BaseActivity() {
 
     override fun requestData() {}
 
-    override fun observeCallBack() {}
+    override fun observeCallBack() {
+        mViewModel.user.observe(this, Observer { user ->
+            if (user != null) {
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                startActivity(Intent(this, HomeActivity::class.java))
+                finish()
+            } else {
+                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
