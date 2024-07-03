@@ -8,6 +8,7 @@ import com.vancoding.tasksapp.databinding.ActivityLoginBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
+import com.vancoding.tasksapp.util.PreferencesManager
 import com.vancoding.tasksapp.viewmodel.LoginViewModel
 import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 
@@ -43,6 +44,7 @@ class LoginActivity : BaseActivity() {
     override fun observeCallBack() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
+                PreferencesManager.saveUserCredentials(this, user.username, user.password)
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
