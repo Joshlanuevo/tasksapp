@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.vancoding.tasksapp.R
+import com.vancoding.tasksapp.dialog.AddTasksDialog
 import com.xu.xpopupwindow.XPopupWindow
 
 class AddTasksPopupWindow(var ctx: Context) : XPopupWindow(ctx) {
@@ -24,7 +25,9 @@ class AddTasksPopupWindow(var ctx: Context) : XPopupWindow(ctx) {
     override fun initViews() {
         val tvAddTasks = getPopupView().findViewById<TextView>(R.id.tvAddTasks)
 
-        tvAddTasks.setOnClickListener {}
+        tvAddTasks.setOnClickListener {
+            AddTasksDialog(ctx).showDialog();
+        }
     }
 
     override fun initData() {
