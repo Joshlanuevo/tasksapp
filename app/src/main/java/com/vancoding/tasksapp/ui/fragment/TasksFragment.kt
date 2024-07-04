@@ -1,20 +1,23 @@
 package com.vancoding.tasksapp.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import coil.load
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.adapter.TasksAdapter
+import com.vancoding.tasksapp.bean.TasksBean
 import com.vancoding.tasksapp.databinding.FragmentTasksBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseFragment
-import com.vancoding.tasksapp.popup.AddTasksPopupWindow
 import com.vancoding.tasksapp.repository.TasksRepository
 import com.vancoding.tasksapp.viewmodel.TasksViewModel
 import com.vancoding.tasksapp.viewmodel.TasksViewModelFactory
@@ -51,8 +54,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         binding.ivLogo.load(R.mipmap.ic_launcher)
 
         binding.ivAdd.setOnClickListener {
-            val popupWindow = AddTasksPopupWindow(requireContext());
-            popupWindow.showPopup(binding.ivAdd, 200, 4, Gravity.BOTTOM)
+            showAddTaskDialog()
         }
 
         tasksAdapter = TasksAdapter()
@@ -69,5 +71,31 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
                 tasksAdapter.submitList(it)
             }
         })
+    }
+
+    private fun showAddTaskDialog() {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_tasks, null)
+        val etTaskTitle = dialogView.findViewById<EditText>(R.id.etTaskTitle)
+        val etTaskDescription = dialogView.findViewById<EditText>(R.id.etTaskDescription)
+        val btnAddTask = dialogView.findViewById<Button>(R.id.btnDone)
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        btnAddTask.setOnClickListener {
+            val title = etTaskTitle.text.toString().trim()
+            val description = etTaskDescription.text.toString().trim()
+
+            if (title.isNotEmpty() && description.isNotEmpty()) {
+                val task = TasksBean(title = title, description = description)
+                tasksViewModel.insert(task)
+                dialog.dismiss()
+            } else {
+                Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
     }
 }

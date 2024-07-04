@@ -2,6 +2,7 @@ package com.vancoding.tasksapp.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Button
@@ -20,7 +21,6 @@ import com.vancoding.tasksapp.viewmodel.TasksViewModelFactory
 class AddTasksDialog(private val context: Context) {
 
     private val tasksViewModel: TasksViewModel;
-    private lateinit var tasksAdapter: TasksAdapter
 
     init {
         val activity = context as FragmentActivity

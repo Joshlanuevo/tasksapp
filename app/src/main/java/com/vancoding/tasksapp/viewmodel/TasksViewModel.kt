@@ -14,6 +14,10 @@ class TasksViewModel(private val repository: TasksRepository): ViewModel() {
     val tasks: LiveData<List<TasksBean>>
         get() = _tasks
 
+    init {
+        loadTasks();
+    }
+
     fun insert(task: TasksBean) = viewModelScope.launch {
         repository.insert(task);
         loadTasks();
