@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("androidx.fragment:fragment-ktx:1.4.0")
+
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     implementation("io.coil-kt:coil:2.0.0")

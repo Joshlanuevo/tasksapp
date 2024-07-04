@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.dialog.AddTasksDialog
 import com.xu.xpopupwindow.XPopupWindow
+import kotlinx.coroutines.Job
 
 class AddTasksPopupWindow(var ctx: Context) : XPopupWindow(ctx) {
 

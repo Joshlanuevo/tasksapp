@@ -7,9 +7,28 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import com.vancoding.tasksapp.R
+import com.vancoding.tasksapp.adapter.TasksAdapter
+import com.vancoding.tasksapp.bean.TasksBean
+import com.vancoding.tasksapp.db.UserDb
+import com.vancoding.tasksapp.repository.TasksRepository
+import com.vancoding.tasksapp.viewmodel.TasksViewModel
+import com.vancoding.tasksapp.viewmodel.TasksViewModelFactory
 
 class AddTasksDialog(private val context: Context) {
+
+    private val tasksViewModel: TasksViewModel;
+    private lateinit var tasksAdapter: TasksAdapter
+
+    init {
+        val activity = context as FragmentActivity
+        val tasksdao = UserDb.getDatabase(context).tasksDao
+        val repository = TasksRepository(tasksdao)
+        val factory = TasksViewModelFactory(repository)
+        tasksViewModel = ViewModelProvider(activity, factory).get(TasksViewModel::class.java)
+    }
 
     fun showDialog() {
         val dialog = Dialog(context);
@@ -33,12 +52,12 @@ class AddTasksDialog(private val context: Context) {
             if (taskTitle.isEmpty()) {
                 etTaskTitle.error = "Task title is required";
             } else {
+                val task = TasksBean(title = taskTitle, description = taskDescription);
+                tasksViewModel.insert(task);
                 Toast.makeText(context, "Task Added: $taskTitle - $taskDescription", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         }
-
         dialog.show();
     }
-
 }
