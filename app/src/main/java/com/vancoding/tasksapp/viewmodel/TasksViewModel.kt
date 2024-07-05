@@ -28,6 +28,11 @@ class TasksViewModel(private val repository: TasksRepository): ViewModel() {
         loadTasks();
     }
 
+    fun delete(task: TasksBean) = viewModelScope.launch {
+        repository.delete(task);
+        loadTasks();
+    }
+
     fun loadTasks() = viewModelScope.launch {
         val tasks = repository.getAllTasks();
         _tasks.value = tasks

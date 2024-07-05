@@ -1,6 +1,7 @@
 package com.vancoding.tasksapp.db
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -14,6 +15,9 @@ interface TasksDao {
 
     @Update
     suspend fun update(task: TasksBean): Int
+
+    @Delete
+    suspend fun delete(task: TasksBean)
 
     @Query("SELECT * FROM tasks")
     suspend fun getAllTasks(): List<TasksBean>

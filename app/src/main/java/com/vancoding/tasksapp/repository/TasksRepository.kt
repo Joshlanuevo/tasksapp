@@ -13,6 +13,10 @@ class TasksRepository(private val tasksDao: TasksDao) {
         return tasksDao.update(task);
     }
 
+    suspend fun delete(task: TasksBean) {
+        return tasksDao.delete(task);
+    }
+
     suspend fun getAllTasks(): List<TasksBean> {
         return tasksDao.getAllTasks();
     }
