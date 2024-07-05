@@ -64,7 +64,7 @@
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
                 android:drawableTop="@drawable/tab_find_icon"
-                android:text="Discover"
+                android:text="Users"
                 app:itemBackground="@null" />
 
             <RadioButton
