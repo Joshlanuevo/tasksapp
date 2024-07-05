@@ -9,6 +9,7 @@ import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
 import com.vancoding.tasksapp.util.PreferencesManager
+import com.vancoding.tasksapp.util.ValidationUtil
 import com.vancoding.tasksapp.viewmodel.LoginViewModel
 import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 
@@ -27,8 +28,10 @@ class LoginActivity : BaseActivity() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            if (username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show()
+            if (!ValidationUtil.isUsernameValid(username)) {
+                Toast.makeText(this, "Invalid username (minimum 8 characters)", Toast.LENGTH_SHORT).show()
+            } else if (!ValidationUtil.isPasswordValid(password)) {
+                Toast.makeText(this, "Invalid password (minimum 8 characters)", Toast.LENGTH_SHORT).show()
             } else {
                 mViewModel.getUser(username, password)
             }
