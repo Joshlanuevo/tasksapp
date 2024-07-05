@@ -18,8 +18,9 @@ import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity() {
     private lateinit var bindView: ActivitySplashBinding;
+    private val userRepository by lazy { UserRepository(UserDb.getDatabase(this).userDao) }
     private val mViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(UserRepository(UserDb.getDatabase(this).userDao))
+        LoginViewModelFactory(application, userRepository)
     }
     override fun initView() {
         bindView = ActivitySplashBinding.inflate(layoutInflater);

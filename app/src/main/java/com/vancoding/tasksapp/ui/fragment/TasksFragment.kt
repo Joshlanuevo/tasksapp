@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import coil.load
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.adapter.TasksAdapter
@@ -19,15 +20,17 @@ import com.vancoding.tasksapp.databinding.FragmentTasksBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseFragment
 import com.vancoding.tasksapp.repository.TasksRepository
+import com.vancoding.tasksapp.util.PreferencesManager
 import com.vancoding.tasksapp.viewmodel.TasksViewModel
 import com.vancoding.tasksapp.viewmodel.TasksViewModelFactory
+import kotlinx.coroutines.launch
 
 class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     private var _binding: FragmentTasksBinding? = null;
     private val binding get() = _binding!!;
     private lateinit var tasksAdapter: TasksAdapter;
     private val tasksViewModel: TasksViewModel by viewModels {
-        TasksViewModelFactory(TasksRepository(UserDb.getDatabase(requireContext()).tasksDao));
+        TasksViewModelFactory(TasksRepository(UserDb.getDatabase(requireContext().applicationContext).tasksDao))
     }
 
     override fun onCreateView(
@@ -51,7 +54,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     }
 
     override fun initView() {
-        binding.ivLogo.load(R.mipmap.ic_launcher);
+        binding.ivLogo.load(R.mipmap.ic_launcher)
 
         binding.ivAdd.setOnClickListener {
             showAddTaskDialog();
@@ -69,8 +72,14 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     }
 
     override fun requestData() {
-        tasksViewModel.loadTasks();
+        val currentUserId = PreferencesManager.getUserId(requireContext())
+        lifecycleScope.launch { // Use lifecycleScope.launch to launch coroutine
+            if (currentUserId != null) {
+                tasksViewModel.getTasksForUser(currentUserId)
+            }
+        }
     }
+
 
     override fun observeCallBack() {
         tasksViewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
@@ -93,16 +102,19 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         btnAddTask.setOnClickListener {
             val title = etTaskTitle.text.toString().trim()
             val description = etTaskDescription.text.toString().trim()
+            val currentUserId = PreferencesManager.getUserId(requireContext())
 
             if (title.isNotEmpty() && description.isNotEmpty()) {
-                val task = TasksBean(title = title, description = description)
-                tasksViewModel.insert(task)
+                val task =
+                    currentUserId?.let { it1 -> TasksBean(userId = it1, title = title, description = description) }
+                if (task != null) {
+                    tasksViewModel.insert(task, requireContext())
+                }
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show()
             }
         }
-
         dialog.show()
     }
 
@@ -128,7 +140,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
 
             if (title.isNotEmpty() && description.isNotEmpty()) {
                 val updatedTask = task.copy(title = title, description = description);
-                tasksViewModel.update(updatedTask);
+                tasksViewModel.update(updatedTask, requireContext());
                 dialog.dismiss();
             } else {
                 Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show();
@@ -143,7 +155,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             .setTitle("Delete Task")
             .setMessage("Are you sure you want to delete the task? If you delete it, you will never be able to recover it.")
             .setPositiveButton("Delete") { _, _ ->
-                tasksViewModel.delete(task);
+                tasksViewModel.delete(task, requireContext());
             }
             .setNegativeButton("Cancel", null)
             .create()

@@ -21,4 +21,7 @@ interface TasksDao {
 
     @Query("SELECT * FROM tasks")
     suspend fun getAllTasks(): List<TasksBean>
+
+    @Query("SELECT * FROM tasks WHERE user_id = :userId")
+    suspend fun getTasksForUser(userId: Int): List<TasksBean>
 }

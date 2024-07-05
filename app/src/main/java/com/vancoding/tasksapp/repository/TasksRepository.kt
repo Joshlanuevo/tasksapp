@@ -20,4 +20,8 @@ class TasksRepository(private val tasksDao: TasksDao) {
     suspend fun getAllTasks(): List<TasksBean> {
         return tasksDao.getAllTasks();
     }
+
+    suspend fun getTasksForUser(userId: Int): List<TasksBean> {
+        return tasksDao.getTasksForUser(userId)
+    }
 }

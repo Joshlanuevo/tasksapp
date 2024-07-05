@@ -14,9 +14,10 @@ import com.vancoding.tasksapp.viewmodel.RegisterViewModel
 import com.vancoding.tasksapp.viewmodel.RegisterViewModelFactory
 
 class RegisterActivity : BaseActivity() {
-    private lateinit var binding: ActivityRegisterBinding;
+    private lateinit var binding: ActivityRegisterBinding
+    private val userRepository by lazy { UserRepository(UserDb.getDatabase(this).userDao) }
     private val mViewModel: RegisterViewModel by viewModels {
-        RegisterViewModelFactory(UserRepository(UserDb.getDatabase(this).userDao))
+        RegisterViewModelFactory(application, userRepository)
     }
 
     override fun initView() {

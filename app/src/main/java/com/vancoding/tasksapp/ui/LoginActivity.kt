@@ -14,8 +14,9 @@ import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 
 class LoginActivity : BaseActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val userRepository by lazy { UserRepository(UserDb.getDatabase(this).userDao) }
     private val mViewModel: LoginViewModel by viewModels {
-        LoginViewModelFactory(UserRepository(UserDb.getDatabase(this).userDao))
+        LoginViewModelFactory(application, userRepository)
     }
 
     override fun initView() {
@@ -29,23 +30,25 @@ class LoginActivity : BaseActivity() {
             if (username.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please enter both username and password", Toast.LENGTH_SHORT).show()
             } else {
-                mViewModel.getUser(username, password);
+                mViewModel.getUser(username, password)
             }
         }
 
         binding.BtnRegister.setOnClickListener {
-            val intent =Intent(this, RegisterActivity::class.java);
-            startActivity(intent);
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    override fun requestData() {}
+    override fun requestData() {
+        // No specific data requests in this context
+    }
 
     override fun observeCallBack() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
                 PreferencesManager.saveUserCredentials(this, user.username, user.password)
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
