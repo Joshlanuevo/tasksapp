@@ -21,6 +21,7 @@ import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseFragment
 import com.vancoding.tasksapp.repository.TasksRepository
 import com.vancoding.tasksapp.util.PreferencesManager
+import com.vancoding.tasksapp.util.ToastUtils
 import com.vancoding.tasksapp.viewmodel.TasksViewModel
 import com.vancoding.tasksapp.viewmodel.TasksViewModelFactory
 import kotlinx.coroutines.launch
@@ -115,7 +116,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
                 }
                 dialog.dismiss()
             } else {
-                Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(requireContext(), "Please enter both title and description", it);
             }
         }
         dialog.show()
@@ -146,7 +147,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
                 tasksViewModel.update(updatedTask, requireContext());
                 dialog.dismiss();
             } else {
-                Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(requireContext(), "Please enter both title and description", it);
             }
         }
 

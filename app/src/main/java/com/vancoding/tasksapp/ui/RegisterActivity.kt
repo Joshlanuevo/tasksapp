@@ -9,6 +9,7 @@ import com.vancoding.tasksapp.databinding.ActivityRegisterBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
+import com.vancoding.tasksapp.util.ToastUtils
 import com.vancoding.tasksapp.util.ValidationUtil
 import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
 import com.vancoding.tasksapp.viewmodel.RegisterViewModel
@@ -30,11 +31,11 @@ class RegisterActivity : BaseActivity() {
             val password = binding.etPassword.text.toString().trim();
 
             if (!ValidationUtil.isUsernameValid(username)) {
-                Toast.makeText(this, "Invalid username (minimum 8 characters)", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid username (minimum 8 characters)", it);
             } else if (!ValidationUtil.isPasswordValid(password)) {
-                Toast.makeText(this, "Invalid password (minimum 8 characters)", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid password (minimum 8 characters)", it);
             } else {
-                mViewModel.insert(username, password)
+                mViewModel.insert(username, password);
             }
         }
 
@@ -49,11 +50,11 @@ class RegisterActivity : BaseActivity() {
     override fun observeCallBack() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
-                Toast.makeText(this, "Register Successful", Toast.LENGTH_SHORT).show();
+                ToastUtils.showToast(this, "Register Successful", binding.root);
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid username or password", binding.root);
             }
         })
     }

@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/tab_friend_icon"
+                android:drawableTop="@drawable/tab_find_icon"
                 android:checked="true"
                 android:text="Tasks"
                 app:itemBackground="@null" />
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:layout_weight="1"
-                android:drawableTop="@drawable/tab_find_icon"
+                android:drawableTop="@drawable/tab_friend_icon"
                 android:text="Users"
                 app:itemBackground="@null" />
 

@@ -9,6 +9,7 @@ import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
 import com.vancoding.tasksapp.util.PreferencesManager
+import com.vancoding.tasksapp.util.ToastUtils
 import com.vancoding.tasksapp.util.ValidationUtil
 import com.vancoding.tasksapp.viewmodel.LoginViewModel
 import com.vancoding.tasksapp.viewmodel.LoginViewModelFactory
@@ -29,9 +30,9 @@ class LoginActivity : BaseActivity() {
             val password = binding.etPassword.text.toString().trim()
 
             if (!ValidationUtil.isUsernameValid(username)) {
-                Toast.makeText(this, "Invalid username (minimum 8 characters)", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid username (minimum 8 characters)", it);
             } else if (!ValidationUtil.isPasswordValid(password)) {
-                Toast.makeText(this, "Invalid password (minimum 8 characters)", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid password (minimum 8 characters)", it);
             } else {
                 mViewModel.getUser(username, password)
             }
@@ -51,11 +52,11 @@ class LoginActivity : BaseActivity() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
                 PreferencesManager.saveUserCredentials(this, user.username, user.password)
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Login Successful", binding.root);
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
-                Toast.makeText(this, "Invalid username or password", Toast.LENGTH_SHORT).show()
+                ToastUtils.showToast(this, "Invalid username or password", binding.root);
             }
         })
     }
