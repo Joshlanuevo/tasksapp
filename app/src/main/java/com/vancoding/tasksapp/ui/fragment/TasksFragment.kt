@@ -1,12 +1,12 @@
 package com.vancoding.tasksapp.ui.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
@@ -57,7 +57,9 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             showAddTaskDialog()
         }
 
-        tasksAdapter = TasksAdapter()
+        tasksAdapter = TasksAdapter { task ->
+            showUpdateTaskDialog(task)
+        }
         binding.listTasks.adapter = tasksAdapter
     }
 
@@ -90,6 +92,38 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             if (title.isNotEmpty() && description.isNotEmpty()) {
                 val task = TasksBean(title = title, description = description)
                 tasksViewModel.insert(task)
+                dialog.dismiss()
+            } else {
+                Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dialog.show()
+    }
+
+    private fun showUpdateTaskDialog(task: TasksBean) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_tasks, null)
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialog_title)
+        val etTaskTitle = dialogView.findViewById<EditText>(R.id.etTaskTitle)
+        val etTaskDescription = dialogView.findViewById<EditText>(R.id.etTaskDescription)
+        val btnUpdateTask = dialogView.findViewById<Button>(R.id.btnDone)
+
+        dialogTitle.text = "Update Task"
+        etTaskTitle.setText(task.title)
+        etTaskDescription.setText(task.description)
+        btnUpdateTask.text = "Update"
+
+        val dialog = AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+
+        btnUpdateTask.setOnClickListener {
+            val title = etTaskTitle.text.toString().trim()
+            val description = etTaskDescription.text.toString().trim()
+
+            if (title.isNotEmpty() && description.isNotEmpty()) {
+                val updatedTask = task.copy(title = title, description = description)
+                tasksViewModel.update(updatedTask)
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(), "Please enter both title and description", Toast.LENGTH_SHORT).show()

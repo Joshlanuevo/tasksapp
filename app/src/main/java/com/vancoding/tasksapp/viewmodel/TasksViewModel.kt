@@ -23,6 +23,11 @@ class TasksViewModel(private val repository: TasksRepository): ViewModel() {
         loadTasks();
     }
 
+    fun update(task: TasksBean) = viewModelScope.launch {
+        repository.update(task);
+        loadTasks();
+    }
+
     fun loadTasks() = viewModelScope.launch {
         val tasks = repository.getAllTasks();
         _tasks.value = tasks

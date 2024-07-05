@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.vancoding.tasksapp.bean.TasksBean
 import com.vancoding.tasksapp.databinding.ItemTaskBinding
 
-class TasksAdapter : ListAdapter<TasksBean, TasksAdapter.TaskViewHolder>(TaskDiffCallback()) {
+class TasksAdapter(private val onEditClick: (TasksBean) -> Unit) : ListAdapter<TasksBean, TasksAdapter.TaskViewHolder>(TaskDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TaskViewHolder(binding);
+        return TaskViewHolder(binding, onEditClick);
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
@@ -20,10 +20,11 @@ class TasksAdapter : ListAdapter<TasksBean, TasksAdapter.TaskViewHolder>(TaskDif
         holder.bind(task);
     }
 
-    class TaskViewHolder(private val binding: ItemTaskBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TaskViewHolder(private val binding: ItemTaskBinding, private val onEditClick: (TasksBean) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(task: TasksBean) {
             binding.tvTaskTitle.text = task.title;
             binding.tvTaskDescription.text = task.description;
+            binding.ivEditTask.setOnClickListener { onEditClick(task) }
         }
     }
 

@@ -9,6 +9,10 @@ class TasksRepository(private val tasksDao: TasksDao) {
         return tasksDao.insert(task);
     }
 
+    suspend fun update(task: TasksBean): Int {
+        return tasksDao.update(task);
+    }
+
     suspend fun getAllTasks(): List<TasksBean> {
         return tasksDao.getAllTasks();
     }
