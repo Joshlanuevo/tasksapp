@@ -46,6 +46,8 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         initView();
         requestData();
         observeCallBack();
+
+        binding.refreshHome.setOnRefreshListener { requestData() }
     }
 
     override fun onDestroyView() {
@@ -85,6 +87,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         tasksViewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.let {
                 tasksAdapter.submitList(it);
+                binding.refreshHome.isRefreshing = false // Stop the refreshing animation
             }
         })
     }
