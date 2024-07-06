@@ -50,6 +50,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("androidx.activity:activity-ktx:1.2.3")
     implementation("androidx.fragment:fragment-ktx:1.4.0")
 
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
@@ -74,4 +75,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // LiveData
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+
+    // Image Selector
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+    implementation("com.github.lihangleo2:ShadowLayout:3.3.3")
+    implementation("io.github.razerdp:BasePopup:3.2.1")
+    implementation("io.coil-kt:coil:1.4.0")
 }

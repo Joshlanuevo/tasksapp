@@ -16,5 +16,8 @@ data class UserBean(
     val nickname: String,
 
     @ColumnInfo(name = "password")
-    val password: String
+    val password: String,
+
+    @ColumnInfo(name = "avatar_url")
+    val avatarUrl: String? = null
 )

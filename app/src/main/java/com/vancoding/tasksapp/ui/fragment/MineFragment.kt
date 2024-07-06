@@ -78,6 +78,13 @@ class MineFragment : BaseFragment(R.layout.fragment_mine) {
         mViewModel.userInfo.observe(viewLifecycleOwner, Observer { userInfo ->
             binding.tvNickName.text = userInfo.nickname;
             binding.tvUsername.text = userInfo.username;
+            binding.layoutHeader.showUrl(userInfo.avatar);
+        })
+
+        // Ensuring AvatarImageView updates when userInfo.avatar changes
+        binding.layoutHeader.setRoundRadius(100000F) // Making the avatar circle
+        mViewModel.userInfo.observe(viewLifecycleOwner, Observer { userInfo ->
+            binding.layoutHeader.showUrl(userInfo.avatar)
         })
     }
 

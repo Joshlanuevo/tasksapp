@@ -22,6 +22,10 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUserById(userId)
     }
 
+    suspend fun updateAvatar(userId: Int, avatarUrl: String) {
+        userDao.updateAvatar(userId, avatarUrl)
+    }
+
     suspend fun getUsersWithTasks(): List<UserWithTasksBean> {
         return userDao.getUsersWithTasks()
     }

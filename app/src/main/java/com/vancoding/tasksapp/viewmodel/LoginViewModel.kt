@@ -25,4 +25,10 @@ class LoginViewModel(application: Application, private val repository: UserRepos
             }
         }
     }
+
+    fun updateAvatar(userId: Int, avatarUrl: String) {
+        viewModelScope.launch {
+            repository.updateAvatar(userId, avatarUrl)
+        }
+    }
 }

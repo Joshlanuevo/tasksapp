@@ -1,35 +1,38 @@
 package com.vancoding.tasksapp.widget
 
 import android.content.Context
+import android.net.Uri
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.utils.widget.ImageFilterView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.vancoding.tasksapp.R
 
 class AvatarImageView : FrameLayout {
-    private lateinit var ivHeaderUrl: ImageFilterView;
-    private lateinit var tvHeaderDefault: TextView;
-    private var roundRadius = 100F;
-    private var chatId = "";
-    private var chatName = "";
-
-    init {
-        LayoutInflater.from(context).inflate(R.layout.layout_header_new, this);
-    }
+    private lateinit var ivHeaderUrl: ImageView
+    private lateinit var tvHeaderDefault: TextView
+    private var roundRadius = 100F
+    private var chatId = ""
+    private var chatName = ""
 
     constructor(context: Context) : super(context) {
+        initView()
     }
 
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         initView()
     }
 
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
+        initView()
+    }
+
     private fun initView() {
+        LayoutInflater.from(context).inflate(R.layout.layout_header_new, this)
         ivHeaderUrl = findViewById(R.id.ivHeaderUrl)
         tvHeaderDefault = findViewById(R.id.tvHeaderDefault)
     }
@@ -54,44 +57,49 @@ class AvatarImageView : FrameLayout {
     }
 
     fun showUrl(imageUrl: String?) {
-        if (TextUtils.isEmpty(imageUrl) || !imageUrl!!.startsWith("http")) {
-            showDefault()
-        } else {
-            tvHeaderDefault.visibility = GONE
-            ivHeaderUrl.load(imageUrl) {
-                transformations(RoundedCornersTransformation(roundRadius))//display circular image
+        if (imageUrl?.startsWith("content://") == true) {
+            // Handle content URI differently, for example:
+            ivHeaderUrl.load(Uri.parse(imageUrl)) {
+                transformations(RoundedCornersTransformation(roundRadius))
                 placeholder(R.drawable.ic_mine_header)
-                listener(onCancel = {}, onError = { r, e ->
-                    showDefault()
-                }, onSuccess = { request, metadata ->
-                })
+                error(R.drawable.ic_mine_header)
+            }
+        } else {
+            // Normal URL loading
+            ivHeaderUrl.load(imageUrl) {
+                transformations(RoundedCornersTransformation(roundRadius))
+                placeholder(R.drawable.ic_mine_header)
+                error(R.drawable.ic_mine_header)
             }
         }
     }
 
+
     fun showImageRes(resId: Int) {
         tvHeaderDefault.visibility = GONE
-        ivHeaderUrl.load(resId) {
-            transformations(RoundedCornersTransformation(roundRadius))//display circular image
-        }
+        ivHeaderUrl.setImageResource(resId)
     }
 
     fun showDefault() {
         try {
             if (!TextUtils.isEmpty(chatName)) {
                 tvHeaderDefault.visibility = VISIBLE
-                tvHeaderDefault.text = chatName.substring(0, 1).uppercase()
+                tvHeaderDefault.text = chatName.substring(0, 1).uppercase() ?: ""
             } else {
+                tvHeaderDefault.visibility = VISIBLE
                 tvHeaderDefault.text = ""
             }
 
-            val lastStr = chatId.substring(chatId.length - 1, chatId.length)
-            ivHeaderUrl.load(getImgRes(lastStr)) {
-                transformations(RoundedCornersTransformation(roundRadius))//display circular image
+            if (!TextUtils.isEmpty(chatId)) {
+                val lastStr = chatId.substring(chatId.length - 1)
+                ivHeaderUrl.setImageResource(getImgRes(lastStr))
+            } else {
+                // Handle default case when chatId is empty
+                ivHeaderUrl.setImageResource(getImgRes("0")) // Default image resource
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            tvHeaderDefault.text = chatName.substring(0, 1).uppercase()
+            tvHeaderDefault.text = ""
         }
     }
 

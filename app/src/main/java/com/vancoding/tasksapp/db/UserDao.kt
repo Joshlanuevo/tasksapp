@@ -25,4 +25,7 @@ interface UserDao {
     @Transaction
     @Query("SELECT * FROM users")
     fun getUsersWithTasks(): List<UserWithTasksBean>
+
+    @Query("UPDATE users SET avatar_url = :avatarUrl WHERE id = :userId")
+    suspend fun updateAvatar(userId: Int, avatarUrl: String)
 }
