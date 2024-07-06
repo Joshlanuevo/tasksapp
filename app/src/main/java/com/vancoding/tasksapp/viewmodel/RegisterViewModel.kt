@@ -18,7 +18,8 @@ class RegisterViewModel(application: Application, private val repository: UserRe
         get() = _user
 
     fun insert(username: String, password: String) = viewModelScope.launch {
-        val user = UserBean(username = username, password = password)
+        val nickname = "User${System.currentTimeMillis()}"
+        val user = UserBean(nickname = nickname, username = username, password = password)
         val userId = repository.insert(user)
         if (userId > 0) {
             user.id = userId.toInt()

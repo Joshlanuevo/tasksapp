@@ -83,7 +83,7 @@
             app:layout_constraintTop_toTopOf="@id/tvNickName" />
 
         <TextView
-            android:id="@+id/tvJxh"
+            android:id="@+id/tvUsername"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

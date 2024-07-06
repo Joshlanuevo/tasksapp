@@ -14,6 +14,10 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUser(username, password)
     }
 
+    suspend fun getUserById(userId: Int): UserBean? {
+        return userDao.getUserById(userId)
+    }
+
     suspend fun getUsersWithTasks(): List<UserWithTasksBean> {
         return userDao.getUsersWithTasks()
     }

@@ -56,19 +56,4 @@ object PreferencesManager {
         val sharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         sharedPreferences.edit().remove(PREF_USER_ID).apply()
     }
-
-//    fun getUserId(context: Context): Int {
-//        val preferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-//        return preferences.getInt(PREF_USER_ID, -1) // Return -1 as default or handle appropriately
-//    }
-//
-//    fun setUserId(context: Context, userId: Int) {
-//        val preferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-//        preferences.edit().putInt(PREF_USER_ID, userId).apply()
-//    }
-//
-//    fun clearUserId(context: Context) {
-//        val preferences = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-//        preferences.edit().remove(PREF_USER_ID).apply()
-//    }
 }

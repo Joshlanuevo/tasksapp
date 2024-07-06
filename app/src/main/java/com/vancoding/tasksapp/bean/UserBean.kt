@@ -12,6 +12,9 @@ data class UserBean(
     @ColumnInfo(name = "username")
     val username: String,
 
+    @ColumnInfo(name = "name")
+    val nickname: String,
+
     @ColumnInfo(name = "password")
     val password: String
 )
