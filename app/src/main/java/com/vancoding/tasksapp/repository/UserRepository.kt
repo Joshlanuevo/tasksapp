@@ -14,6 +14,10 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUser(username, password)
     }
 
+    suspend fun updateNickname(newNickname: String, userId: Int) {
+        userDao.updateNickname(newNickname, userId)
+    }
+
     suspend fun getUserById(userId: Int): UserBean? {
         return userDao.getUserById(userId)
     }

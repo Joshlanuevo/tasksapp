@@ -19,6 +19,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :userId")
     suspend fun getUserById(userId: Int): UserBean?
 
+    @Query("UPDATE users SET name = :newNickname WHERE id = :userId")
+    suspend fun updateNickname(newNickname: String, userId: Int)
+
     @Transaction
     @Query("SELECT * FROM users")
     fun getUsersWithTasks(): List<UserWithTasksBean>

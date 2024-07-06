@@ -16,12 +16,19 @@ class MineViewModel(application: Application, private val repository: UserReposi
         viewModelScope.launch {
             val userId = PreferencesManager.getUserId(getApplication()) // Pass application context
             val user = userId?.let { repository.getUserById(it) }
-            _userInfo.postValue(UserInfo(user?.nickname ?: "", user?.username ?: ""))
+            _userInfo.postValue(UserInfo(user?.nickname ?: "", user?.username ?: ""));
+        }
+    }
+
+    fun updateNickname(newNickname: String, userId: Int) {
+        viewModelScope.launch {
+            repository.updateNickname(newNickname, userId);
+            getUserInfo(); // Fetch updated user info
         }
     }
 
     data class UserInfo(
         val nickname: String,
         val username: String
-    )
+    );
 }

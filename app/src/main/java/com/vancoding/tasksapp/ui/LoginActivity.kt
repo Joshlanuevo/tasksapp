@@ -1,7 +1,6 @@
 package com.vancoding.tasksapp.ui
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.vancoding.tasksapp.databinding.ActivityLoginBinding
