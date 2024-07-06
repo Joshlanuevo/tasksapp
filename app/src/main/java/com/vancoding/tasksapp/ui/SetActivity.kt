@@ -12,6 +12,11 @@ class SetActivity : BaseActivity() {
         bindView = ActivitySetBinding.inflate(layoutInflater);
         setContentView(bindView.root);
 
+        bindView.titleBar.apply {
+            viewBack.setOnClickListener { finish() }
+            tvTitle.text = "Settings"
+        }
+
         bindView.btnLogout.setOnClickListener {
             logoutUser();
         }
