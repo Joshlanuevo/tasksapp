@@ -67,7 +67,7 @@
         android:paddingLeft="15dp"
         android:maxLength="16"
         android:textSize="14sp"
-        android:hint="@string/login_username_hint"
+        android:hint="@string/register_username_hint"
         android:background="@drawable/bg_et_login"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -82,13 +82,24 @@
         android:layout_marginRight="24dp"
         android:background="@drawable/bg_et_login"
         android:drawablePadding="10dp"
-        android:hint="@string/login_password_hint"
+        android:hint="@string/register_password_hint"
         android:inputType="textPassword"
         android:paddingStart="15dp"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etUsername" />
+
+    <ImageView
+        android:id="@+id/pwdState"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/ic_pwd_close"
+        app:layout_constraintBottom_toBottomOf="@id/etPassword"
+        app:layout_constraintRight_toRightOf="@id/etPassword"
+        app:layout_constraintTop_toTopOf="@id/etPassword" />
 
     <Button
         android:id="@+id/btnRegister"

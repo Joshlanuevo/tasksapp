@@ -3,4 +3,6 @@
     <string name="app_desc">Tasks make you life organized</string>
     <string name="login_username_hint">Please input your username.</string>
     <string name="login_password_hint">Please input your password.</string>
+    <string name="register_username_hint">Please enter a username.</string>
+    <string name="register_password_hint">Combination of 8-16 letters and numbers</string>
 </resources>

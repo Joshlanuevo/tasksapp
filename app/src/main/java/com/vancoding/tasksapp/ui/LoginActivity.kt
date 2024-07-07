@@ -1,8 +1,14 @@
 package com.vancoding.tasksapp.ui
 
 import android.content.Intent
+import android.text.InputType
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.databinding.ActivityLoginBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
@@ -37,6 +43,12 @@ class LoginActivity : BaseActivity() {
             }
         }
 
+        binding.etUsername.inputType = InputType.TYPE_CLASS_TEXT
+
+        binding.pwdState.setOnClickListener {
+            showPassword(binding.etPassword, binding.pwdState);
+        }
+
         binding.BtnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
@@ -58,5 +70,15 @@ class LoginActivity : BaseActivity() {
                 ToastUtils.showToast(this, "Invalid username or password", binding.root);
             }
         })
+    }
+
+    private fun showPassword(edit: EditText, iv: ImageView) {
+        edit.requestFocus();
+        val show = edit.transformationMethod is PasswordTransformationMethod;
+        edit.transformationMethod =
+            if (show) HideReturnsTransformationMethod.getInstance()
+            else PasswordTransformationMethod.getInstance()
+        iv.setImageResource(if (show) R.drawable.ic_pwd_open else R.drawable.ic_pwd_close);
+        edit.setSelection(edit.text.length);
     }
 }
