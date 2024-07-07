@@ -126,6 +126,14 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
                 tasksAdapter.submitList(it);
                 binding.refreshHome.isRefreshing = false // Stop the refreshing animation
                 originalTasksList = it
+
+                if (it.isEmpty()) {
+                    binding.tvNoTasks.visibility = View.VISIBLE;
+                    binding.listTasks.visibility = View.GONE;
+                } else {
+                    binding.tvNoTasks.visibility = View.GONE;
+                    binding.listTasks.visibility = View.VISIBLE;
+                }
             }
         })
     }

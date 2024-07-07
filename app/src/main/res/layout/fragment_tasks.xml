@@ -85,6 +85,16 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tvNoTasks"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No Tasks"
+        android:textColor="@color/color_gray"
+        android:textSize="18sp"
+        android:visibility="gone"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshHome"
         android:layout_width="match_parent"
