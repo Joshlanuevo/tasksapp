@@ -1,5 +1,6 @@
 package com.vancoding.tasksapp.db
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -24,7 +25,7 @@ interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM users")
-    fun getUsersWithTasks(): List<UserWithTasksBean>
+    fun getUsersWithTasks(): LiveData<List<UserWithTasksBean>>
 
     @Query("UPDATE users SET avatar_url = :avatarUrl WHERE id = :userId")
     suspend fun updateAvatar(userId: Int, avatarUrl: String)

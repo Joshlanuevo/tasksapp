@@ -1,5 +1,6 @@
 package com.vancoding.tasksapp.repository
 
+import androidx.lifecycle.LiveData
 import com.vancoding.tasksapp.bean.UserBean
 import com.vancoding.tasksapp.bean.UserWithTasksBean
 import com.vancoding.tasksapp.db.UserDao
@@ -26,7 +27,7 @@ class UserRepository(private val userDao: UserDao) {
         userDao.updateAvatar(userId, avatarUrl)
     }
 
-    suspend fun getUsersWithTasks(): List<UserWithTasksBean> {
+    fun getUsersWithTasks(): LiveData<List<UserWithTasksBean>> {
         return userDao.getUsersWithTasks()
     }
 }

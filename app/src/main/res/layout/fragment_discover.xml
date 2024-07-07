@@ -94,7 +94,8 @@
             android:layout_height="match_parent"
             android:background="@color/color_light"
             android:orientation="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_user_with_tasks"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

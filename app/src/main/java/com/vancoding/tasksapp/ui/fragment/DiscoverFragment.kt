@@ -4,12 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.vancoding.tasksapp.R
+import com.vancoding.tasksapp.adapter.UserWithTasksAdapter
 import com.vancoding.tasksapp.databinding.FragmentDiscoverBinding
 import com.vancoding.tasksapp.mvvm.BaseFragment
+import com.vancoding.tasksapp.viewmodel.DiscoverViewModel
 
 class DiscoverFragment: BaseFragment(R.layout.fragment_discover) {
+    private lateinit var mViewModel: DiscoverViewModel;
+    private lateinit var mAapter: UserWithTasksAdapter;
+
     private var _binding: FragmentDiscoverBinding? = null;
     private val binding get() = _binding!!
 
@@ -34,6 +42,20 @@ class DiscoverFragment: BaseFragment(R.layout.fragment_discover) {
 
     override fun initView() {
         binding.ivLogo.load(R.mipmap.ic_launcher)
+
+        mAapter = UserWithTasksAdapter();
+        binding.listUsers.adapter = mAapter;
+        binding.listUsers.layoutManager = GridLayoutManager(requireContext(), 2)
+
+        mViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java);
+
+        mViewModel.usersWithTasks.observe(viewLifecycleOwner) { userWithTasks ->
+            userWithTasks?.let {
+                mAapter.setUsers(it);
+            }
+        }
+
+        mViewModel.getUserWithTasks()
     }
 
     override fun requestData() {
