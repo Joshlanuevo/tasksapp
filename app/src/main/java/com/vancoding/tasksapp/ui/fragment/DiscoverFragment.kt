@@ -31,17 +31,17 @@ class DiscoverFragment: BaseFragment(R.layout.fragment_discover) {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initView()
+        super.onViewCreated(view, savedInstanceState);
+        initView();
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        super.onDestroyView();
+        _binding = null;
     }
 
     override fun initView() {
-        binding.ivLogo.load(R.mipmap.ic_launcher)
+        binding.ivLogo.load(R.mipmap.ic_launcher);
 
         mAapter = UserWithTasksAdapter();
         binding.listUsers.adapter = mAapter;
@@ -49,17 +49,20 @@ class DiscoverFragment: BaseFragment(R.layout.fragment_discover) {
 
         mViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java);
 
+        binding.refreshLayout.setOnRefreshListener { requestData() }
+
         mViewModel.usersWithTasks.observe(viewLifecycleOwner) { userWithTasks ->
             userWithTasks?.let {
                 mAapter.setUsers(it);
             }
         }
 
-        mViewModel.getUserWithTasks()
+        mViewModel.getUserWithTasks();
     }
 
     override fun requestData() {
-        // Fetch data...
+        mViewModel.getUserWithTasks()
+        binding.refreshLayout.isRefreshing = false
     }
 
     override fun observeCallBack() {
