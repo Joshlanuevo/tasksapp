@@ -29,4 +29,7 @@ interface UserDao {
 
     @Query("UPDATE users SET avatar_url = :avatarUrl WHERE id = :userId")
     suspend fun updateAvatar(userId: Int, avatarUrl: String)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM users WHERE username = :username LIMIT 1)")
+    suspend fun isUsernameExists(username: String): Boolean
 }

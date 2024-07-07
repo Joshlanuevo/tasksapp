@@ -19,14 +19,18 @@ class RegisterViewModel(application: Application, private val repository: UserRe
 
     fun insert(username: String, password: String) = viewModelScope.launch {
         val nickname = "User${System.currentTimeMillis()}"
-        val user = UserBean(nickname = nickname, username = username, password = password)
-        val userId = repository.insert(user)
-        if (userId > 0) {
-            user.id = userId.toInt()
-            _user.postValue(user)
-            PreferencesManager.setUserId(getApplication(), userId.toInt())
+        if (repository.checkUsernameExists(username)) {
+            _user.postValue(null) // Username already exists
         } else {
-            _user.postValue(null)
+            val user = UserBean(nickname = nickname, username = username, password = password)
+            val userId = repository.insert(user)
+            if (userId > 0) {
+                user.id = userId.toInt()
+                _user.postValue(user)
+                PreferencesManager.setUserId(getApplication(), userId.toInt())
+            } else {
+                _user.postValue(null)
+            }
         }
     }
 }

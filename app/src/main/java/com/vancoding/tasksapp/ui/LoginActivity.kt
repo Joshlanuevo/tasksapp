@@ -34,10 +34,8 @@ class LoginActivity : BaseActivity() {
             val username = binding.etUsername.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
 
-            if (!ValidationUtil.isUsernameValid(username)) {
-                ToastUtils.showToast(this, "Invalid username (minimum 8 characters)", it);
-            } else if (!ValidationUtil.isPasswordValid(password)) {
-                ToastUtils.showToast(this, "Invalid password (minimum 8 characters)", it);
+            if (username.isEmpty() || password.isEmpty()) {
+                ToastUtils.showToast(this, "Please enter both username and password", binding.root)
             } else {
                 mViewModel.getUser(username, password)
             }
@@ -62,15 +60,25 @@ class LoginActivity : BaseActivity() {
     override fun observeCallBack() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
+                // Successful login
                 PreferencesManager.saveUserCredentials(this, user.username, user.password)
-                ToastUtils.showToast(this, "Login Successful", binding.root);
+                ToastUtils.showToast(this, "Login Successful", binding.root)
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
-                ToastUtils.showToast(this, "Invalid username or password", binding.root);
+                // Handle case where username does not exist or incorrect password
+                val username = binding.etUsername.text.toString().trim()
+                val password = binding.etPassword.text.toString().trim()
+
+                if (username.isEmpty() || password.isEmpty()) {
+                    ToastUtils.showToast(this, "Please enter both username and password", binding.root)
+                } else {
+                    ToastUtils.showToast(this, "User does not exist", binding.root)
+                }
             }
         })
     }
+
 
     private fun showPassword(edit: EditText, iv: ImageView) {
         edit.requestFocus();

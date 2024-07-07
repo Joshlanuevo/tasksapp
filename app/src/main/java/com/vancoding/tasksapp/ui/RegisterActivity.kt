@@ -62,11 +62,11 @@ class RegisterActivity : BaseActivity() {
     override fun observeCallBack() {
         mViewModel.user.observe(this, Observer { user ->
             if (user != null) {
-                ToastUtils.showToast(this, "Register Successful", binding.root);
+                ToastUtils.showToast(this, "Register Successful", binding.root)
                 startActivity(Intent(this, HomeActivity::class.java))
                 finish()
             } else {
-                ToastUtils.showToast(this, "Invalid username or password", binding.root);
+                ToastUtils.showToast(this, "Username already exists", binding.root)
             }
         })
     }
