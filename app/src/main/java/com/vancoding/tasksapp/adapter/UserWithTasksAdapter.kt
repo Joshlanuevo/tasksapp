@@ -36,7 +36,7 @@ class UserWithTasksAdapter : RecyclerView.Adapter<UserWithTasksAdapter.UserWithT
         // Load avatar with placeholder
         val avatarUrl = userWithTasks.user.avatarUrl
         holder.ivAvatar.load(avatarUrl) {
-            placeholder(R.drawable.ic_mine_header) // Replace with your placeholder drawable
+            placeholder(R.drawable.ic_mine_header) // Placeholder drawable
             error(R.drawable.ic_mine_header) // In case of an error, use the placeholder
             transformations(CircleCropTransformation())
         }
@@ -52,5 +52,11 @@ class UserWithTasksAdapter : RecyclerView.Adapter<UserWithTasksAdapter.UserWithT
         userList = users
         notifyDataSetChanged()
     }
+
+    fun submitList(list: List<UserWithTasksBean>) {
+        this.userList = list
+        notifyDataSetChanged() // or use DiffUtil for more efficient updates
+    }
+
 }
 

@@ -57,15 +57,17 @@
             android:paddingRight="20dp"
             android:paddingBottom="18dp">
 
-            <TextView
+            <EditText
                 android:id="@+id/tvSearch"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:background="@drawable/bg_et_login"
                 android:gravity="center_vertical"
                 android:paddingLeft="30dp"
-                android:text="Search for tasks"
+                android:hint="Search for tasks"
                 android:textColor="#999999"
+                android:maxLines="1"
+                android:inputType="text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>

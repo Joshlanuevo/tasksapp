@@ -1,9 +1,15 @@
 package com.vancoding.tasksapp.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputType
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -34,6 +40,8 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         TasksViewModelFactory(TasksRepository(UserDb.getDatabase(requireContext().applicationContext).tasksDao))
     }
 
+    private var originalTasksList: List<TasksBean> = emptyList()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +57,34 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         observeCallBack();
 
         binding.refreshHome.setOnRefreshListener { requestData() }
+
+        binding.tvSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // No action needed
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Filter the list based on search query
+                tasksAdapter.submitList(filterTasks(s.toString()))
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // No action needed
+            }
+        })
+
+        binding.tvSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                // Perform search or filter tasks when "Enter" is pressed
+                val query = binding.tvSearch.text.toString().trim()
+                tasksAdapter.submitList(filterTasks(query))
+                // Hide the keyboard
+                hideKeyboard()
+                true // Consume the action
+            } else {
+                false // Continue with default behavior
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -89,6 +125,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             tasks?.let {
                 tasksAdapter.submitList(it);
                 binding.refreshHome.isRefreshing = false // Stop the refreshing animation
+                originalTasksList = it
             }
         })
     }
@@ -165,5 +202,16 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             .create()
 
         dialog.show();
+    }
+
+    private fun filterTasks(query: String): List<TasksBean> {
+        return originalTasksList.filter {
+            it.title.contains(query, ignoreCase = true) || it.description.contains(query, ignoreCase = true)
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.tvSearch.windowToken, 0)
     }
 }
