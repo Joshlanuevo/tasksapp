@@ -14,17 +14,17 @@ object ToastUtils {
         // Hide the keyboard
         KeyboardUtils.hideKeyboard(view)
 
-        // Create and show the custom toast
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater;
-        val toastView = inflater.inflate(R.layout.layout_custom_toast, null);
+        // Create and show the custom toast with default style
+        val inflater = LayoutInflater.from(context)
+        val toastView = inflater.inflate(R.layout.layout_custom_toast, null)
 
-        val textViewToast = toastView.findViewById<TextView>(R.id.textViewToast);
-        textViewToast.text = message;
+        val textViewToast = toastView.findViewById<TextView>(R.id.textViewToast)
+        textViewToast.text = message
 
-        val toast = Toast(context);
-        toast.duration = Toast.LENGTH_SHORT;
-        toast.view = toastView;
-        toast.setGravity(Gravity.CENTER, 0, 0)
-        toast.show();
+        val toast = Toast(context)
+        toast.duration = Toast.LENGTH_SHORT
+        toast.view = toastView
+        toast.setGravity(Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL, 0, 250)
+        toast.show()
     }
 }

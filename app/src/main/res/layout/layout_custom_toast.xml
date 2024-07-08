@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_custom_toast"
     android:padding="8dp"
-    android:orientation="horizontal">
+    android:background="@android:drawable/toast_frame"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textViewToast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:textColor="@color/color_gray"
-        android:textSize="14sp" />
+        android:textColor="@color/color_darkgray"
+        android:gravity="center"
+        android:padding="8dp" />
 </LinearLayout>

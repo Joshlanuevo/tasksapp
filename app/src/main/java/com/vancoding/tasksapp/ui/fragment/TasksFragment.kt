@@ -157,11 +157,11 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             val currentUserId = PreferencesManager.getUserId(requireContext())
 
             if (title.isNotEmpty() && description.isNotEmpty()) {
-                val task =
-                    currentUserId?.let { it1 -> TasksBean(userId = it1, title = title, description = description) }
+                val task = currentUserId?.let { it1 -> TasksBean(userId = it1, title = title, description = description) }
                 if (task != null) {
                     tasksViewModel.insert(task, requireContext())
                 }
+                ToastUtils.showToast(requireContext(), "New task added.", it);
                 dialog.dismiss()
             } else {
                 ToastUtils.showToast(requireContext(), "Please enter both title and description", it);
@@ -192,6 +192,7 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
 
             if (title.isNotEmpty() && description.isNotEmpty()) {
                 val updatedTask = task.copy(title = title, description = description);
+                ToastUtils.showToast(requireContext(), "Task updated.", it);
                 tasksViewModel.update(updatedTask, requireContext());
                 dialog.dismiss();
             } else {
@@ -208,10 +209,10 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
             .setMessage("Are you sure you want to delete the task? If you delete it, you will never be able to recover it.")
             .setPositiveButton("Delete") { _, _ ->
                 tasksViewModel.delete(task, requireContext());
+                ToastUtils.showToast(requireContext(), "Task deleted..", binding.root);
             }
             .setNegativeButton("Cancel", null)
             .create()
-
         dialog.show();
     }
 
