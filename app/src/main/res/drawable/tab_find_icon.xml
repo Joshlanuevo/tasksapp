@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Picture when selected -->
-    <item android:drawable="@drawable/home_tab_find_select_new3" android:state_checked="true" />
+    <item android:drawable="@drawable/home_tab_select" android:state_checked="true" />
     <!-- When not selected Picture -->
-    <item android:drawable="@drawable/home_tab_find_normal_new" android:state_checkable="false" />
+    <item android:drawable="@drawable/home_tab" android:state_checkable="false" />
 </selector>

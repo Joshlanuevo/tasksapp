@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.adapter.TasksAdapter
 import com.vancoding.tasksapp.bean.TasksBean
@@ -93,7 +94,9 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     }
 
     override fun initView() {
-        binding.ivLogo.load(R.mipmap.ic_launcher)
+        binding.ivLogo.load(R.mipmap.ic_launcher) {
+            transformations(CircleCropTransformation())
+        }
 
         binding.ivAdd.setOnClickListener {
             showAddTaskDialog();

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import coil.transform.CircleCropTransformation
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.adapter.UserWithTasksAdapter
 import com.vancoding.tasksapp.bean.UserWithTasksBean
@@ -53,7 +54,10 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
     }
 
     override fun initView() {
-        binding.ivLogo.load(R.mipmap.ic_launcher)
+        binding.ivLogo.load(R.mipmap.ic_launcher) {
+            transformations(CircleCropTransformation())
+        }
+
 
         mAdapter = UserWithTasksAdapter()
         binding.listUsers.adapter = mAdapter

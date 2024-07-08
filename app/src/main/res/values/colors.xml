@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_black">#FF000000</color>
-    <color name="color_white">#FFFFFFFF</color>
-    <color name="color_primary">#6C5DD3</color>
-    <color name="color_cyan">#00FFFF</color>
-    <color name="color_light_blue">#ADD8E6</color>
-    <color name="color_navy">#000080</color>
+    <color name="color_black">#000033</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_primary">#0033CC</color>
+    <color name="color_cyan">#66B2FF</color>
+    <color name="color_light_blue">#99CCFF</color>
+    <color name="color_navy">#000066</color>
     <color name="color_royal_blue">#4169E1</color>
     <color name="color_sky_blue">#87CEEB</color>
     <color name="color_dodger_blue">#1E90FF</color>
@@ -17,9 +17,9 @@
     <color name="color_cornflower_blue">#6495ED</color>
     <color name="color_light_sky_blue">#87CEFA</color>
     <color name="color_powder_blue">#B0E0E6</color>
-    <color name="color_gray">#808191</color>
+    <color name="color_gray">#B0C4DE</color>
     <color name="color_light">#F4F4F4</color>
-    <color name="color_divider">#F8F8F8</color>
-    <color name="color_window_background">#dedede</color>
-    <color name="color_eeeeee">#EEEEEE</color>
+    <color name="color_divider">#F0F8FF</color>
+    <color name="color_window_background">#B0E0E6</color>
+    <color name="color_eeeeee">#D1E7F3</color>
 </resources>
