@@ -75,6 +75,10 @@ class PersonalInfoActivity : BaseActivity() {
             startActivityForResult(intent, MODIFY_USERNAME_REQUEST_CODE)
         }
 
+        bindView.layoutPwd.setOnClickListener {
+            startActivity(Intent(this, ModifyPasswordActivity::class.java))
+        }
+
         mViewModel.getUserInfo()
     }
 

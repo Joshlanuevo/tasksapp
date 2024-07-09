@@ -46,6 +46,30 @@ class MineViewModel(application: Application, private val repository: UserReposi
         }
     }
 
+    fun changePassword(oldPassword: String, newPassword: String): LiveData<Result<Boolean>> {
+        val result = MutableLiveData<Result<Boolean>>()
+        viewModelScope.launch {
+            try {
+                val userId = PreferencesManager.getUserId(getApplication())
+                if (userId != null) {
+                    val success = repository.changePassword(userId, oldPassword, newPassword)
+                    result.postValue(Result.success(success))
+                    if (success) {
+                        Log.d(TAG, "changePassword: Password changed successfully for userId $userId")
+                    } else {
+                        Log.d(TAG, "changePassword: Incorrect old password for userId $userId")
+                    }
+                } else {
+                    result.postValue(Result.failure(Exception("User ID not found")))
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "changePassword error: ${e.message}", e)
+                result.postValue(Result.failure(e))
+            }
+        }
+        return result
+    }
+
     fun updateNickname(newNickname: String, userId: Int) {
         viewModelScope.launch {
             try {

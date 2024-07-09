@@ -59,6 +59,11 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".ui.ModifyPasswordActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".ui.FeedbackActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />

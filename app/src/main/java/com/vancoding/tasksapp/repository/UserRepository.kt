@@ -19,6 +19,16 @@ class UserRepository(private val userDao: UserDao) {
         userDao.updateUsername(newUsername, userId)
     }
 
+    suspend fun changePassword(userId: Int, oldPassword: String, newPassword: String): Boolean {
+        val user = userDao.getUserById(userId)
+        return if (user != null && user.password == oldPassword) {
+            userDao.updatePassword(userId.toString(), newPassword)
+            true
+        } else {
+            false
+        }
+    }
+
     suspend fun updateNickname(newNickname: String, userId: Int) {
         userDao.updateNickname(newNickname, userId)
     }
