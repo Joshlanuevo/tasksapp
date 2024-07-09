@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.vancoding.tasksapp.adapter.UserWithTasksAdapter
 import com.vancoding.tasksapp.bean.UserWithTasksBean
 import com.vancoding.tasksapp.databinding.FragmentDiscoverBinding
 import com.vancoding.tasksapp.mvvm.BaseFragment
+import com.vancoding.tasksapp.popup.AddUserPopupWindow
 import com.vancoding.tasksapp.viewmodel.DiscoverViewModel
 import java.util.*
 
@@ -66,6 +68,11 @@ class DiscoverFragment : BaseFragment(R.layout.fragment_discover) {
         mViewModel = ViewModelProvider(this).get(DiscoverViewModel::class.java)
 
         binding.refreshLayout.setOnRefreshListener { requestData() }
+
+        binding.ivAdd.setOnClickListener {
+            val popupWindow = AddUserPopupWindow(requireContext());
+            popupWindow.showPopup(binding.ivAdd, 200, 4, Gravity.BOTTOM);
+        }
 
         // Set up search functionality
         binding.tvSearch.addTextChangedListener(object : TextWatcher {

@@ -22,5 +22,5 @@
     <color name="color_light">#F4F4F4</color>
     <color name="color_divider">#F0F8FF</color>
     <color name="color_window_background">#B0E0E6</color>
-    <color name="color_eeeeee">#D1E7F3</color>
+    <color name="color_eeeeee">#EEEEEE</color>
 </resources>
