@@ -14,6 +14,8 @@ import com.vancoding.tasksapp.databinding.ActivityPersonalInfoBinding
 import com.vancoding.tasksapp.db.UserDb
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
+import com.vancoding.tasksapp.util.PreferencesManager
+import com.vancoding.tasksapp.util.ToastUtils
 import com.vancoding.tasksapp.viewmodel.MineViewModelFactory
 
 class PersonalInfoActivity : BaseActivity() {
@@ -23,6 +25,7 @@ class PersonalInfoActivity : BaseActivity() {
     companion object {
         private const val MODIFY_NAME_REQUEST_CODE = 1
         private const val IMAGE_PICKER_REQUEST_CODE = 2
+        private const val MODIFY_USERNAME_REQUEST_CODE = 3
     }
 
     @SuppressLint("ResourceType")
@@ -41,6 +44,8 @@ class PersonalInfoActivity : BaseActivity() {
 
         mViewModel.userInfo.observe(this, Observer { userInfo ->
             bindView.tvNickName.text = userInfo.nickname
+            bindView.tvUsername.text = userInfo.username
+            bindView.tvEditUsername.text = userInfo.username
             bindView.layoutHeader.showUrl(userInfo.avatar)
         })
 
@@ -64,6 +69,12 @@ class PersonalInfoActivity : BaseActivity() {
             startActivityForResult(intent, MODIFY_NAME_REQUEST_CODE)
         }
 
+        bindView.cvUserName.setOnClickListener {
+            val intent = Intent(this, ModifyUsernameActivity::class.java)
+            intent.putExtra("username", bindView.tvEditUsername.text.toString())
+            startActivityForResult(intent, MODIFY_USERNAME_REQUEST_CODE)
+        }
+
         mViewModel.getUserInfo()
     }
 
@@ -82,6 +93,14 @@ class PersonalInfoActivity : BaseActivity() {
         } else if (requestCode == MODIFY_NAME_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             val updateNickName = data?.getStringExtra("nickname")
             if (!updateNickName.isNullOrEmpty()) {
+                mViewModel.getUserInfo()
+                setResult(Activity.RESULT_OK, data)
+            }
+        } else if (requestCode == MODIFY_USERNAME_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val updatedUsername = data?.getStringExtra("username")
+            if (!updatedUsername.isNullOrEmpty()) {
+                bindView.tvEditUsername.text = updatedUsername
+                ToastUtils.showToast(this, "Username updated successfully", bindView.root);
                 mViewModel.getUserInfo()
                 setResult(Activity.RESULT_OK, data)
             }

@@ -20,6 +20,9 @@ interface UserDao {
     @Query("SELECT * FROM users WHERE id = :userId")
     suspend fun getUserById(userId: Int): UserBean?
 
+    @Query("UPDATE users SET username = :newUsername WHERE id = :userId")
+    suspend fun updateUsername(newUsername: String, userId: Int)
+
     @Query("UPDATE users SET name = :newNickname WHERE id = :userId")
     suspend fun updateNickname(newNickname: String, userId: Int)
 

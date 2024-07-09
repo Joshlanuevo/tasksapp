@@ -26,6 +26,10 @@ class ModifyNameActivity : BaseActivity() {
         val currentNickname = intent.getStringExtra("nickname")
         bindView.etName.setText(currentNickname);
 
+        bindView.ivClear.setOnClickListener {
+            bindView.etName.setText("");
+        }
+
         bindView.toolbar.run {
             viewBack.setOnClickListener {
                 finish()

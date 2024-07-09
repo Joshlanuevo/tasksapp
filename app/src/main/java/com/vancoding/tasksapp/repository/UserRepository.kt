@@ -15,6 +15,10 @@ class UserRepository(private val userDao: UserDao) {
         return userDao.getUser(username, password)
     }
 
+    suspend fun updateUsername(newUsername: String, userId: Int) {
+        userDao.updateUsername(newUsername, userId)
+    }
+
     suspend fun updateNickname(newNickname: String, userId: Int) {
         userDao.updateNickname(newNickname, userId)
     }

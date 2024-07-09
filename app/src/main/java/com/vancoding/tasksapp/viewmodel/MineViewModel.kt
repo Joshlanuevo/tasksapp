@@ -34,6 +34,18 @@ class MineViewModel(application: Application, private val repository: UserReposi
         }
     }
 
+    fun updateUsername(newUsername: String, userId: Int) {
+        viewModelScope.launch {
+            try {
+                repository.updateUsername(newUsername, userId)
+                getUserInfo() // Fetch updated user info
+                Log.d(TAG, "updateUsername: Updated username to $newUsername for userId $userId")
+            } catch (e: Exception) {
+                Log.e(TAG, "updateUsername error: ${e.message}", e)
+            }
+        }
+    }
+
     fun updateNickname(newNickname: String, userId: Int) {
         viewModelScope.launch {
             try {
