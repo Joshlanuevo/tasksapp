@@ -37,6 +37,21 @@ android {
     viewBinding {
         enable = true
     }
+
+    applicationVariants.all {
+        val variant = this
+        variant.outputs.all {
+            val output = this
+            val appName = "Tasks"
+            val buildType = variant.buildType.name
+            val versionCode = variant.versionCode
+            val versionName = variant.versionName
+
+            // Customize APK name
+            val apkName = "${appName}-${buildType}-v${versionName}-${versionCode}.apk"
+            (output as com.android.build.gradle.internal.api.ApkVariantOutputImpl).outputFileName = apkName
+        }
+    }
 }
 
 dependencies {
