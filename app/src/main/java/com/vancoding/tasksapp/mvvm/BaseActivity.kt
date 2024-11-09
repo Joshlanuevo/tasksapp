@@ -1,10 +1,17 @@
 package com.vancoding.tasksapp.mvvm
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.vancoding.tasksapp.R
+import com.vancoding.tasksapp.util.ToastUtils
 
 open abstract class BaseActivity : AppCompatActivity() {
     var isShowNoNetDialog = false;
@@ -46,5 +53,4 @@ open abstract class BaseActivity : AppCompatActivity() {
     open fun isTranslucentStatus(): Boolean {
         return true;
     }
-
 }

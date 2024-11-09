@@ -57,33 +57,31 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
         requestData();
         observeCallBack();
 
-        binding.refreshHome.setOnRefreshListener { requestData() }
+        binding.apply {
+            refreshHome.setOnRefreshListener { requestData() }
 
-        binding.tvSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No action needed
-            }
+            tvSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Filter the list based on search query
-                tasksAdapter.submitList(filterTasks(s.toString()))
-            }
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    // Filter the list based on search query
+                    tasksAdapter.submitList(filterTasks(s.toString()))
+                }
 
-            override fun afterTextChanged(s: Editable?) {
-                // No action needed
-            }
-        })
+                override fun afterTextChanged(s: Editable?) {}
+            })
 
-        binding.tvSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
-                // Perform search or filter tasks when "Enter" is pressed
-                val query = binding.tvSearch.text.toString().trim()
-                tasksAdapter.submitList(filterTasks(query))
-                // Hide the keyboard
-                hideKeyboard()
-                true // Consume the action
-            } else {
-                false // Continue with default behavior
+            tvSearch.setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH || actionId == EditorInfo.IME_ACTION_DONE) {
+                    // Perform search or filter tasks when "Enter" is pressed
+                    val query = binding.tvSearch.text.toString().trim()
+                    tasksAdapter.submitList(filterTasks(query))
+                    // Hide the keyboard
+                    hideKeyboard()
+                    true // Consume the action
+                } else {
+                    false // Continue with default behavior
+                }
             }
         }
     }
@@ -94,23 +92,25 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     }
 
     override fun initView() {
-        binding.ivLogo.load(R.mipmap.ic_launcher) {
-            transformations(CircleCropTransformation())
-        }
-
-        binding.ivAdd.setOnClickListener {
-            showAddTaskDialog();
-        }
-
-        tasksAdapter = TasksAdapter(
-            onEditClick = { task ->
-                showUpdateTaskDialog(task);
-            },
-            onDeleteClick = { task ->
-                showDeleteTaskDialog(task);
+        binding.apply {
+            ivLogo.load(R.mipmap.ic_launcher) {
+                transformations(CircleCropTransformation())
             }
-        )
-        binding.listTasks.adapter = tasksAdapter;
+
+            ivAdd.setOnClickListener {
+                showAddTaskDialog();
+            }
+
+            tasksAdapter = TasksAdapter(
+                onEditClick = { task ->
+                    showUpdateTaskDialog(task);
+                },
+                onDeleteClick = { task ->
+                    showDeleteTaskDialog(task);
+                }
+            )
+            listTasks.adapter = tasksAdapter;
+        }
     }
 
     override fun requestData() {
@@ -126,16 +126,18 @@ class TasksFragment : BaseFragment(R.layout.fragment_tasks) {
     override fun observeCallBack() {
         tasksViewModel.tasks.observe(viewLifecycleOwner, Observer { tasks ->
             tasks?.let {
-                tasksAdapter.submitList(it);
-                binding.refreshHome.isRefreshing = false // Stop the refreshing animation
-                originalTasksList = it
+                binding.apply {
+                    tasksAdapter.submitList(it);
+                    refreshHome.isRefreshing = false // Stop the refreshing animation
+                    originalTasksList = it
 
-                if (it.isEmpty()) {
-                    binding.tvNoTasks.visibility = View.VISIBLE;
-                    binding.listTasks.visibility = View.GONE;
-                } else {
-                    binding.tvNoTasks.visibility = View.GONE;
-                    binding.listTasks.visibility = View.VISIBLE;
+                    if (it.isEmpty()) {
+                        tvNoTasks.visibility = View.VISIBLE;
+                        listTasks.visibility = View.GONE;
+                    } else {
+                        tvNoTasks.visibility = View.GONE;
+                        listTasks.visibility = View.VISIBLE;
+                    }
                 }
             }
         })
