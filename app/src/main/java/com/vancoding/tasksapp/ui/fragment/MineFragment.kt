@@ -76,9 +76,11 @@ class MineFragment : BaseFragment(R.layout.fragment_mine) {
 
     override fun observeCallBack() {
         mViewModel.userInfo.observe(viewLifecycleOwner, Observer { userInfo ->
-            binding.tvNickName.text = userInfo.nickname;
-            binding.tvUsername.text = userInfo.username;
-            binding.layoutHeader.showUrl(userInfo.avatar);
+            binding.apply {
+                tvNickName.text = userInfo.nickname;
+                tvUsername.text = userInfo.username;
+                layoutHeader.showUrl(userInfo.avatar);
+            }
         })
 
         // Ensuring AvatarImageView updates when userInfo.avatar changes

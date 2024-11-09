@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.vancoding.tasksapp.R
 import com.vancoding.tasksapp.databinding.ActivityModifyPasswordBinding
 import com.vancoding.tasksapp.db.UserDb
+import com.vancoding.tasksapp.extensions.showToast
 import com.vancoding.tasksapp.mvvm.BaseActivity
 import com.vancoding.tasksapp.repository.UserRepository
 import com.vancoding.tasksapp.util.ToastUtils
@@ -74,11 +75,11 @@ class ModifyPasswordActivity : BaseActivity() {
 
     private fun validateInput(oldPassword: String, newPassword: String, confirmPassword: String): Boolean {
         if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-            ToastUtils.showToast(this@ModifyPasswordActivity, "All fields are required", bindView.root)
+            showToast("All fields are required")
             return false
         }
         if (newPassword != confirmPassword) {
-            ToastUtils.showToast(this@ModifyPasswordActivity, "Passwords do not match", bindView.root)
+            showToast("Passwords do not match")
             return false
         }
         return true
